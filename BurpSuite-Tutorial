@@ -1,0 +1,54 @@
+# Basic XSS Testing Using BurpSuite
+
+## Prerequisites
+
+- Install [**FoxyProxy**](https://getfoxyproxy.org/) extension for Firefox.
+- Have **BurpSuite** installed and running.
+
+---
+
+## Step 1: Configure FoxyProxy
+
+1. Open **FoxyProxy** settings in Firefox.
+2. Add a new proxy with the following configuration:
+    - **Proxy Type:** HTTP
+    - **IP Address:** `127.0.0.1`
+    - **Port:** `8080`
+    - (Adjust if your BurpSuite settings differ.)
+
+> **Tip:**  
+> Label this proxy clearly (e.g., "BurpSuite Proxy") so you can easily toggle it on/off.
+
+---
+
+## Step 2: Prepare BurpSuite
+
+- Launch **BurpSuite**.
+- Navigate to the **Proxy** tab.
+- Confirm that **Intercept** is set to **ON**.
+
+---
+
+## Step 3: Locate and Test the Form
+
+1. In Firefox, navigate to the **target URL** where the form is located.
+2. Observe that **client-side filtering** is active on the form fields.
+
+> **Important:**  
+> Forms with client-side validation often still process dangerous input at the server level if bypassed manually.
+
+3. Fill out the form using input that **complies** with the field restrictions.
+4. Click **Submit Query!**.
+
+---
+
+## Step 4: Modify the Request in BurpSuite
+
+1. In **BurpSuite**, locate the HTTP request triggered by the form submission.
+2. Find the field you wish to target (e.g., `email`).
+3. Replace its value with your XSS payload.
+
+Example:
+
+```html
+<script>alert('XSS')</script>
